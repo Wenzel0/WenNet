@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cameras</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+
+html, body{
+    height:100%;
+    width:100%;
+    overflow:hidden;
+    background:black;
+    color:white;
+}
+
+/* Blurred, dark, flickering background */
+.bg-blur{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: url('Assets/Images/Cameras.png') no-repeat center center;
+    background-size: cover;
+    filter: blur(6px) brightness(0.4) saturate(0.5); /* Dark & desaturated */
+    z-index:0;
+    animation: flicker 1.5s infinite;
+}
+
+/* Flicker effect */
+@keyframes flicker{
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {opacity:1;}
+    20%, 22%, 24%, 55% {opacity:0.85;} /* subtle flicker */
+}
+
+/* Semi-transparent overlay */
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.3);
+    z-index:1;
+}
+
+/* Content on top */
+.container{
+    position:absolute;
+    top:50%;
+    left:10%;
+    transform:translateY(-50%);
+    text-align:left;
+    z-index:2;
+    color:white;
+    animation:fadeContent 1s ease forwards;
+}
+
+/* Fade in content from transparent */
+@keyframes fadeContent{
+    0%{opacity:0;}
+    100%{opacity:1;}
+}
+
+.title{font-size:3rem;font-weight:700;margin-bottom:20px;}
+.subtitle{opacity:0.7;margin-bottom:20px;}
+
+.btn{
+    padding:15px 35px;
+    border-radius:15px;
+    background:rgba(255,255,255,0.05);
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:700;
+    font-size:1.2rem;
+    margin-right:10px;
+    color:white;
+}
+
+.btn:hover{transform:translateY(-3px) scale(1.05);}
+
+.fly-text{
+    position:fixed;
+    z-index:9999;
+    font-weight:700;
+    transition:0.7s ease;
+    color:white;
+}
+.fly-text.move{
+    top:20px !important;
+    left:20px !important;
+    font-size:2rem;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-blur"></div>
+<div class="overlay"></div>
+
+<div class="container">
+    <div class="title">Cameras</div>
+    <div class="subtitle">Game</div>
+
+    <div class="buttons">
+        <div class="btn" onclick="playGame(this)">▶ Play Game</div>
+        <div class="btn" onclick="goBack()">⬅ Back</div>
+    </div>
+</div>
+
+<script>
+function playGame(el){
+    const rect = el.getBoundingClientRect();
+
+    // Floating text
+    const fly = document.createElement("div");
+    fly.className="fly-text";
+    fly.innerText="Running Game";
+
+    fly.style.top = rect.top+"px";
+    fly.style.left = rect.left+"px";
+
+    document.body.appendChild(fly);
+
+    setTimeout(()=>fly.classList.add("move"),50);
+
+    // Navigate to actual game
+    setTimeout(()=>{
+        window.location.href = "Assets/Games/Cameras/Warning.html";
+    },700);
+}
+
+function goBack(){
+    window.location.href = "scraps.html";
+}
+</script>
+
+</body>
+</html>
