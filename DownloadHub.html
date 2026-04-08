@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="icon.ico">
+<title>WenNet Download Center</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    background:linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color:white;
+    overflow:hidden;
+}
+
+/* SIDEBAR */
+aside{
+    width:250px;
+    background:rgba(0,0,0,0.4);
+    backdrop-filter:blur(10px);
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    transition:0.3s;
+    z-index:1000;
+}
+
+.logo{
+    font-size:1.5rem;
+    font-weight:700;
+    margin-bottom:30px;
+}
+
+.project{
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+    background:rgba(255,255,255,0.05);
+}
+
+.project:hover{
+    background:rgba(255,255,255,0.15);
+    transform:translateX(5px);
+}
+
+/* MAIN */
+main{
+    flex:1;
+    padding:40px;
+    overflow-y:auto;
+    position:relative;
+}
+
+/* HEADER */
+.header{
+    font-size:2.5rem;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:20px;
+}
+
+/* CARDS */
+.card{
+    background:rgba(255,255,255,0.05);
+    padding:20px;
+    border-radius:15px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px) scale(1.03);
+    background:rgba(255,255,255,0.1);
+}
+
+.version{
+    opacity:0.6;
+    margin-bottom:15px;
+}
+
+.btn{
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#4CAF50;
+    color:white;
+    font-weight:600;
+}
+
+/* MOBILE MENU BUTTON */
+.menu-btn{
+    display:none;
+    position:absolute;
+    top:20px;
+    left:20px;
+    font-size:1.8rem;
+    cursor:pointer;
+    z-index:1090;
+}
+
+/* OVERLAY */
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    z-index:900;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    aside{
+        position:fixed;
+        left:-260px;
+        top:0;
+        height:100%;
+        z-index:1100;
+    }
+
+    aside.active{
+        left:0;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    main{
+        padding:80px 20px 20px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+    <div class="logo">WenNet</div>
+
+    <div class="project" onclick="loadProject('hunted')">Hunted Threshold</div>
+    <div class="project" onclick="loadProject('cameras')">Cameras</div>
+    <div class="project" onclick="loadProject('others')">Other Projects</div>
+</aside>
+
+<!-- MAIN -->
+<main>
+    <div class="menu-btn" onclick="openMenu()">☰</div>
+    <div class="header" id="title">Download Center</div>
+    <div class="grid" id="content">
+        <div style="opacity:0.5;">Select a project from the left.</div>
+        <div style="opacity:0.5;">Or Tap over ☰</div>
+    </div>
+</main>
+
+<script>
+function loadProject(project){
+    const title = document.getElementById("title");
+    const content = document.getElementById("content");
+
+    content.innerHTML = "";
+
+    if(project === "hunted"){
+        title.innerText = "Hunted Threshold Downloads";
+
+        content.innerHTML = `
+        <div class="card">
+            <h3>Hunted Threshold</h3>
+            <div class="version">Version: 0.2 Demo</div>
+            <button class="btn" onclick="download('hunted_v02.zip')">Download on gamejolt</button>
+        </div>
+        `;
+    }
+
+    else if(project === "cameras"){
+        title.innerText = "CAMERAS Downloads";
+
+        content.innerHTML = `
+        <div class="card">
+            <h3>CAMERAS</h3>
+            <div class="version">Version: 0.1v</div>
+            <button class="btn" ('cameras_v01.zip')">Not Available yet!</button>
+        </div>
+        `;
+    }
+
+    else{
+        title.innerText = "Other Projects";
+
+        content.innerHTML = `
+        <div class="card">
+            <h3>Coming Soon</h3>
+            <div class="version">No downloads yet</div>
+        </div>
+        `;
+    }
+
+    closeMenu(); // auto close on mobile after click
+}
+
+function download(file){
+    window.location.href = "https://gamejolt.com/get/build?game=985944&build=1746787" + file;
+}
+
+/* MENU CONTROL */
+function openMenu(){
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").style.display = "block";
+}
+
+function closeMenu(){
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
